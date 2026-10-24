@@ -1,0 +1,277 @@
+/* ---------- 1. Theme variables ---------- */
+:root {
+  color-scheme: dark;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  --bg: #17101f;       /* page background */
+  --panel: #231934;    /* card background */
+  --line: #3a2d52;     /* borders */
+  --text: #f4eefc;     /* main text */
+  --muted: #a898c4;    /* secondary text */
+  --accent: #ff5d8f;   /* pink highlight */
+  --accent2: #3ddbd9;  /* teal highlight */
+}
+/* ---------- 2. Base and page layout ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+/* Two columns: player on the left, playlist on the right */
+.app {
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 980px;
+}
+.player,
+.library {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px;
+}
+/* ---------- 3. Player panel ---------- */
+.player {
+  text-align: center;
+  align-self: start;
+}
+/* Vinyl record (paused by default, spins when .playing is added) */
+.vinyl {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: repeating-radial-gradient(circle, #0c0812 0 3px, #1b1328 3px 6px);
+  box-shadow: 0 0 0 6px #120b1b, 0 18px 40px #0008;
+  animation: spin 6s linear infinite;
+  animation-play-state: paused;
+}
+.vinyl.playing {
+  animation-play-state: running;
+}
+.label {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #17101f;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+/* Song title and artist */
+h1 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+.artist {
+  color: var(--muted);
+  margin: 6px 0 20px;
+  min-height: 1.2em;
+}
+/* ---------- 4. Seek bar and volume ---------- */
+.seek,
+.volume {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.seek span {
+  min-width: 36px;
+}
+input[type=range] {
+  flex: 1;
+  accent-color: var(--accent);
+  height: 4px;
+  cursor: pointer;
+}
+/* ---------- 5. Control buttons ---------- */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+button {
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+/* Previous / next / mute */
+.icon {
+  font-size: 1.4rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+.icon:hover {
+  background: var(--line);
+}
+.icon.small {
+  font-size: 1.1rem;
+  width: 36px;
+  height: 36px;
+}
+/* Main play / pause button */
+.play {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  background: var(--accent);
+  color: #17101f;
+}
+/* Shuffle and repeat toggles */
+.ghost {
+  font-size: 0.78rem;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+.ghost[aria-pressed=true] {
+  color: #17101f;
+  background: var(--accent2);
+  border-color: var(--accent2);
+}
+/* ---------- 6. Search and category chips ---------- */
+.tools {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+#search {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #17101f;
+  font-weight: 700;
+}
+/* ---------- 7. Playlist ---------- */
+.playlist {
+  list-style: none;
+  max-height: 380px;
+  overflow-y: auto;
+  display: grid;
+  gap: 4px;
+}
+.playlist li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.playlist li:hover {
+  background: var(--bg);
+}
+.playlist li.current {
+  background: var(--bg);
+  box-shadow: inset 3px 0 var(--accent);
+}
+.playlist .meta {
+  flex: 1;
+  min-width: 0;
+}
+.playlist b {
+  display: block;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.playlist small {
+  color: var(--muted);
+}
+.tag {
+  font-size: 0.75rem;
+  color: var(--accent2);
+}
+/* "No songs match" message */
+.empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--muted);
+  cursor: default !important;
+}
+/* ---------- 8. Add songs button ---------- */
+.add {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  text-align: center;
+  padding: 12px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+}
+.add:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+/* ---------- 9. Responsive and accessibility ---------- */
+/* Phones and small tablets: stack player above playlist */
+@media (max-width: 760px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+}
+/* Turn off the spinning vinyl for users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  .vinyl {
+    animation: none;
+  }
+}

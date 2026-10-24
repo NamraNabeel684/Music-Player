@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spinwave Music Player</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+  <section class="player" aria-label="Now playing">
+    <div class="vinyl" id="vinyl"><div class="label" id="labelArt">&#9834;</div></div>
+    <h1 id="title">Pick a song</h1>
+    <p id="artist" class="artist">Choose a track from the playlist</p>
+
+    <div class="seek">
+      <span id="current">0:00</span>
+      <input type="range" id="seekBar" min="0" max="100" value="0" step="0.1" aria-label="Seek">
+      <span id="duration">0:00</span>
+    </div>
+
+    <div class="controls">
+      <button id="shuffleBtn" class="ghost" aria-pressed="false">Shuffle</button>
+      <button id="prevBtn" class="icon" aria-label="Previous">&#9198;</button>
+      <button id="playBtn" class="play" aria-label="Play">&#9654;</button>
+      <button id="nextBtn" class="icon" aria-label="Next">&#9197;</button>
+      <button id="repeatBtn" class="ghost" aria-pressed="false">Repeat</button>
+    </div>
+
+    <div class="volume">
+      <button id="muteBtn" class="icon small" aria-label="Mute">&#128266;</button>
+      <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.7" aria-label="Volume">
+    </div>
+  </section>
+
+  <section class="library" aria-label="Playlist">
+    <div class="tools">
+      <input type="search" id="search" placeholder="Search title or artist" aria-label="Search songs">
+      <div class="chips" id="chips"></div>
+    </div>
+    <ul id="playlist" class="playlist"></ul>
+    <button class="add" id="addBtn">Add your own songs</button>
+    <input type="file" id="fileInput" accept="audio/*" multiple hidden>
+  </section>
+</main>
+
+<audio id="audio" preload="metadata"></audio>
+<script src="script.js"></script>
+</body>
+</html>
